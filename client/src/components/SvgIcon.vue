@@ -6,6 +6,7 @@ export default {
     name: {
       type: String,
       required: true,
+      color: String
     },
   },
 
@@ -20,5 +21,5 @@ export default {
 </script>
 
 <template>
-  <component :is="dynamicComponent" />
+    <component :is="dynamicComponent" />
 </template>
