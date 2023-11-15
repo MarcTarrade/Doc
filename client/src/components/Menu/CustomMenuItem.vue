@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router';
-    import SvgIcon from '../SvgIcon.vue';
+    import SvgIcon from '../Media/SvgIcon.vue';
 
     export default {
         props: {

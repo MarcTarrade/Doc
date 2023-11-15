@@ -1,5 +1,5 @@
 <script setup>
-import SvgIcon from '../components/SvgIcon.vue';
+import SvgIcon from '../components/Media/SvgIcon.vue';
 
 </script>
 
