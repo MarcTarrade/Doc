@@ -11,7 +11,7 @@ export default {
 
 <template>
     <div class="wrapper">
-        <CustomMenu />
+        <CustomMenu v-if="!$route.meta.hideNavBar"/>
     </div>
 
   <RouterView />
