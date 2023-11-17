@@ -8,7 +8,8 @@
             return {
                 documents: [],
                 documentsToDelete: [],
-                isSaving: false
+                isSaving: false,
+                currentUser: JSON.parse(sessionStorage.getItem('user'))
             }
         },
         components: {
@@ -32,7 +33,7 @@
                     index: this.documents.length,
                     name: '',
                     path: '',
-                    user: '654b668da2306250f26f24fe'
+                    user: this.currentUser._id
                 })
             },
             async saveDocument(){
@@ -45,7 +46,7 @@
                 
             },
             async getDocuments(){
-                const documentsApi = await documentFactory.getDocuments('654b668da2306250f26f24fe')
+                const documentsApi = await documentFactory.getDocuments(this.currentUser._id)
                 this.documents = documentsApi;
             }
         },
