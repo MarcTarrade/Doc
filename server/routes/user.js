@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const response = await userController.createUser();
+    const response = await userController.saveUsers(req.body.users);
     return res.send(response);
 })
 

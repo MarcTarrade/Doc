@@ -7,6 +7,7 @@
         data(){
             return {
                 users: [],
+                usersToDelete: []
             }
         },
         components:{
@@ -14,9 +15,19 @@
             SvgIcon
         },
         methods: {
-            selectUser(user){
+            async selectUser(user){
+                await userFactory.saveUsers({ users: this.users, usersToDelete: this.usersToDelete });
                 sessionStorage.setItem('user', JSON.stringify(user));
                 this.$router.push({ name: 'home' })
+            },
+            addUser(){
+                this.users.push({
+                    name: '',
+                })
+            },
+            deleteUser(user){
+                this.usersToDelete.push(user);
+                this.users = this.users.filter(us => us !== user);
             }
         },
         async mounted(){
@@ -31,8 +42,8 @@
             <h1>Profils</h1>
         </div>
         <div class="profiles">
-            <ProfileItem v-for="user in users" :key="user.id" :user="user" @click="selectUser(user)"/>
-            <div class="add-profile">
+            <ProfileItem v-for="user in users" :key="user.id" :user="user" @click="selectUser(user)" :deleteUser="deleteUser"/>
+            <div class="add-profile" @click="addUser">
                 <SvgIcon name="Add" class="add-profile-icon"/>
             </div>
         </div>
