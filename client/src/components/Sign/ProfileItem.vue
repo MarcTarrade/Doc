@@ -1,10 +1,12 @@
 <script>
     import SvgIcon from '../Media/SvgIcon.vue';
+    import ModalProfile from './ModalProfile.vue';
 
     export default {
         data(){
             return {
                 displayMore: false,
+                isModalShown: false
             }
         },
         props: {
@@ -12,19 +14,27 @@
             deleteUser: Function
         },
         components:{
-            SvgIcon
-        }
+            SvgIcon,
+            ModalProfile
+        },
+        methods: {
+            showModal(){
+                this.isModalShown = !this.isModalShown
+            }
+        },
+        emits: ['click']
     }
 </script>
 
 <template>
-    <div class="profile-item">
-        <div class="more-container" @click.stop="">
+    <div class="profile-item" @click="this.$emit('click', null)">
+        <div class="more-container" @click.stop>
             <button class="more-button" @click="this.displayMore = !this.displayMore">
                 <SvgIcon name="More_vert" class="more-icon"/>
             </button>
             <div class="more" v-if="displayMore">
                 <button class="delete" @click="deleteUser(user)">Supprimer</button>
+                <button class="update" @click="showModal">Modifier l'image</button>
             </div>
         </div>
         <div class="profile-img">
@@ -32,9 +42,10 @@
             <SvgIcon v-else name="Default_user" class="profile-icon"/>
         </div>
         <div>
-            <input @click.stop="" class="profile-name" v-model="user.name"/>
+            <input @click.stop class="profile-name" v-model="user.name"/>
         </div>
     </div>
+    <ModalProfile v-if="isModalShown" :showModal="showModal" @image="user.image = $event"/>
 </template>
 
 <style>
@@ -100,7 +111,8 @@
         top: 0;
         z-index: 3;
     }
-    .delete{
+    .delete, .update{
+        width: 80%;
         cursor: pointer;
     }
 </style>
