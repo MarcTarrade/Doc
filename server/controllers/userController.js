@@ -22,5 +22,20 @@ module.exports = {
         catch(e){
             throw e
         }
-    }
+    },
+    async saveUsers(users){
+        try{
+            if(users.usersToDelete.length){
+                await User.deleteMany({ _id: users.usersToDelete.map(user => new mongoose.Types.ObjectId(user._id)) });
+            }
+            for (const user of users.users) {
+                if(!user._id && !user.name) continue;
+                await User.updateOne({ _id: new mongoose.Types.ObjectId(user._id) }, user, { upsert: true });
+            }
+            return users;
+        }
+        catch(e){
+            throw e
+        }
+    },
 }
