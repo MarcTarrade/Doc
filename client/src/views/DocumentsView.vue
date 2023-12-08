@@ -2,6 +2,7 @@
     import CardsDocument from '../components/Documents/CardsDocument.vue'
     import SaveDocument from '../components/Documents/SaveDocument.vue';
     import documentFactory from '../controllers/documentFactory';
+    import mediaFactory from '../controllers/mediaFactory';
 
     export default {
         data() {
@@ -48,6 +49,15 @@
             async getDocuments(){
                 const documentsApi = await documentFactory.getDocuments(this.currentUser._id)
                 this.documents = documentsApi;
+            },
+            async deleteFile(selectedDocument){
+                await mediaFactory.deleteDocument(selectedDocument.path.split('/').pop())
+                this.documents = this.documents.map(doc => {
+                    if(doc.index === selectedDocument.index){
+                        doc.path = '';
+                    }
+                    return doc;
+                })
             }
         },
         async mounted() {
@@ -62,7 +72,7 @@
 <template>
     <div class="document-view">
         <SaveDocument @save="this.saveDocument" :isSaving="isSaving"/>
-        <CardsDocument :documents="documents" @documents="this.documents = $event" :addDocument="this.addDocument" :deleteDocument="this.deleteDocument"/>
+        <CardsDocument :documents="documents" @documents="this.documents = $event" :addDocument="this.addDocument" :deleteDocument="this.deleteDocument" :deleteFile="this.deleteFile"/>
     </div>
 </template>
 

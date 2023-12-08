@@ -15,7 +15,8 @@
         props: {
             documents: Array,
             addDocument: Function,
-            deleteDocument: Function
+            deleteDocument: Function,
+            deleteFile: Function
         },
         components: {
             CardDocument,
@@ -28,23 +29,10 @@
                 this.isModalShown = !this.isModalShown;
             },
             clickOnDocument(doc){
-                this.showModal();
-                this.selectedDocument = doc
-            },
-            async deleteFile(){
-                await MediaFactory.deleteDocument(this.selectedDocument.path.split('/').pop())
-                this.documents = this.documents.map(doc => {
-                    if(doc.index === this.selectedDocument.index){
-                        doc.path = '';
-                    }
-                    return doc;
-                })
-                this.showModal()
-            }
-        },
-        computed: {
-            filePath(){
-                if(this.selectedDocument) return this.selectedDocument.path ? this.selectedDocument.path : ''
+                if(doc.path){
+                    this.selectedDocument = doc;
+                    this.showModal();
+                }
             }
         }
     }
@@ -61,9 +49,7 @@
             </div>
         </div>
     </div>
-    <ModalDocument :showModal="showModal" :isModalShown="isModalShown" :filePath="filePath" :deleteFile="deleteFile">
-        
-    </ModalDocument>
+    <ModalDocument :showModal="showModal" :isModalShown="isModalShown" :doc="selectedDocument" :deleteFile="deleteFile"/>
 </template>
 
 <style scoped>

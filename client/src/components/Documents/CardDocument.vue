@@ -16,7 +16,8 @@ import MoreDocument from './MoreDocument.vue';
             CardDocumentUpload,
             SvgIcon,
             MoreDocument
-        }
+        },
+        emits: ['openModal', 'removeDocument'],
     }
 </script>
 

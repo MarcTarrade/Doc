@@ -6,13 +6,19 @@ import RenderPDF from '../Media/RenderPDF.vue';
     props: {
         isModalShown: Boolean,
         showModal: Function,
-        filePath: String,
+        doc: Object,
         deleteFile: Function
     },
     components: { 
         SvgIcon,
         RenderPDF
     },
+    methods: {
+        removeFile() {
+            this.deleteFile(this.doc);
+            this.showModal();
+        }
+    }
 }
 </script>
 
@@ -22,10 +28,10 @@ import RenderPDF from '../Media/RenderPDF.vue';
         <div class="document-modal-content">
             <div class="modal-menu">
                 <div class="edit-document">
-                    <button @click="deleteFile">
+                    <button @click="removeFile">
                         <SvgIcon name="Delete" class="icon"/>
                     </button>
-                    <a :href="filePath">
+                    <a :href="doc.path">
                         <SvgIcon name="Download" class="icon"/>
                     </a>
                 </div>
@@ -36,7 +42,7 @@ import RenderPDF from '../Media/RenderPDF.vue';
                 </div>
             </div>
             <div class="modal-document-container">
-            <RenderPDF :url="filePath" class="modal-document"/>
+            <RenderPDF :url="doc.path" class="modal-document"/>
         </div>
         </div>
     </div>    
