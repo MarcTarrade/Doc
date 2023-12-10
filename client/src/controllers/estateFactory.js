@@ -6,7 +6,7 @@ export default {
             if(!idUser){
                 return { message: 'Aucun id de user', type: 'error' };
             }
-            const response = await axios.get(`/api/estate/${idUser}`);
+            const response = await axios.get(`/api/estate/user/${idUser}`);
             return response.data;
         }
         catch(err){
