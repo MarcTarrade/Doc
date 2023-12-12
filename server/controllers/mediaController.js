@@ -1,24 +1,24 @@
 const fs = require('fs');
 
 module.exports = {
-    async uploadImage(images){
+    async uploadImage(files){
         try{
-            const failedImages = []
-            Object.keys(images).forEach(key => {
-                try{
-                    const img = images[key];
-                    const imagePath = `server/images/${img.name}`;
-                    fs.writeFileSync(imagePath, img.data);
-                }
-                catch(e){
-                    console.error(e);
-                    failedImages.push(img.name)
-                }
-            })
-            return failedImages;
+            const file = files.files;
+            const fileName = new Date().getTime() + '_' + file.name.replaceAll(' ', '_');
+            const filePath = `server/images/${fileName}`;
+            fs.writeFileSync(filePath, file.data);
+            return { type: 'success', message: 'Fichier envoyé avec succès', data: `/api/media/renderImage/${fileName}` }
         }
         catch(e){
             throw e
+        }
+    },
+    async renderImage(fileName){
+        if(fs.existsSync(`server/images/${fileName}`)){
+            return fs.readFileSync(`server/images/${fileName}`);
+        }
+        else{
+            return { type: 'error', message: 'Fichier introuvable' };
         }
     },
     async uploadDocument(files){
