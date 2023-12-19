@@ -30,6 +30,7 @@
 
 <style scoped>
     .menu-list {
+        position: fixed;
         height: 100%;
         width: 300px;
         background-color: #000000;

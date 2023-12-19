@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
     .estate-list{
         display: flex;
         flex-direction: row;
