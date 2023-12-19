@@ -11,6 +11,7 @@ const estateRoute = require('./routes/estate');
 
 mongoose.connect(process.env.MONGO_HOST)
 require('./models/User');
+require('./models/Tenant');
 
 const app = express();
 

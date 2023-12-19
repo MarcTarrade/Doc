@@ -4,6 +4,7 @@ import DocumentsView from '../views/DocumentsView.vue'
 import EstateView from '../views/EstateView.vue'
 import SignInView from '../views/SignInView.vue'
 import auth from '../middleware/auth'
+import EstateItemView from '../views/EstateItemView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,7 @@ const router = createRouter({
     },
     {
         path: '/estate',
-        name: 'estate',
+        name: 'estates',
         component: EstateView,
         meta: {
           middleware: auth
@@ -38,6 +39,14 @@ const router = createRouter({
         component: SignInView,
         meta: {
             hideNavBar: true
+        }
+    },
+    {
+        path: '/estate/:id',
+        name: 'estate',
+        component: EstateItemView,
+        meta: {
+            middleware: auth
         }
     }
   ]

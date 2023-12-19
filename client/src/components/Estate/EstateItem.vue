@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <div class="estate-item">
+    <div class="estate-item" @click="$router.push('/estate/' + this.estate._id)">
         <div class="item-title">
             <h2>{{ this.estate.name }}</h2>
         </div>
@@ -23,7 +23,7 @@
     </div>
 </template>
 
-<style> 
+<style scoped> 
     .estate-item {
         width: 250px;
         height: 250px;
